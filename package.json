@@ -1,0 +1,50 @@
+{
+  "name": "@mozilla/raptor",
+  "version": "4.0.0-next",
+  "private": true,
+  "preferGlobal": true,
+  "description": "CLI tool for Firefox OS Gaia performance tests",
+  "keywords": [
+    "testing",
+    "firefox-os",
+    "gaia",
+    "performance",
+    "b2g",
+    "cli"
+  ],
+  "main": "lib/index.js",
+  "author": {
+    "name": "Eli Perelman",
+    "email": "eli@eliperelman.com"
+  },
+  "bin": {
+    "raptor": "./raptor"
+  },
+  "bugs": {
+    "url": "https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox%20OS&component=Gaia%3A%3APerformanceTest",
+    "email": "eli@mozilla.com"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "debug": "2.2.0",
+    "nomnom": "mozilla-b2g/nomnom",
+    "ramda": "0.18.0",
+    "raptor-regression": "1.0.1",
+    "validator": "4.1.0"
+  },
+  "directories": {},
+  "homepage": "https://developer.mozilla.org/en-US/Firefox_OS/Automated_testing/Raptor",
+  "license": "Apache-2.0",
+  "maintainers": [
+    {
+      "name": "eliperelman",
+      "email": "eli@eliperelman.com"
+    },
+    {
+      "name": "rwood-moz",
+      "email": "rwood@mozilla.com"
+    }
+  ],
+  "repository": "mozilla-b2g/mozilla-raptor",
+  "scripts": {}
+}

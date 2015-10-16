@@ -1,0 +1,9 @@
+#! /usr/bin/env node
+
+var cli = require('./lib')('raptor');
+
+cli.global('version', require('./lib/version'));
+cli.command(require('./commands/query'));
+cli.command(require('./commands/regression'));
+
+cli.start();
