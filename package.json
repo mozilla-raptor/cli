@@ -29,7 +29,8 @@
     "debug": "2.2.0",
     "nomnom": "mozilla-b2g/nomnom",
     "ramda": "0.18.0",
-    "raptor-regression": "1.0.1",
+    "raptor-query": "3.0.0",
+    "raptor-regression": "1.0.2",
     "validator": "4.1.0"
   },
   "directories": {},
@@ -45,6 +46,6 @@
       "email": "rwood@mozilla.com"
     }
   ],
-  "repository": "mozilla-b2g/mozilla-raptor",
+  "repository": "mozilla-raptor/cli",
   "scripts": {}
 }

@@ -3,7 +3,6 @@ var regression = require('raptor-regression');
 
 /**
  * Stream stdin for the process and parse as JSON
- * @pure false
  * @returns {Promise}
  */
 var readStdin = () => {
