@@ -83,8 +83,8 @@ var formatTime = R.converge(R.merge, [
  */
 var execute = (options) => {
   return query(options)
-    .then(JSON.stringify)
-    .then(console.log);
+    .then(H.JSON)
+    .catch(H.exits);
 };
 
 /**

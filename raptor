@@ -5,5 +5,7 @@ var cli = require('./lib')('raptor');
 cli.global('version', require('./lib/version'));
 cli.command(require('./commands/query'));
 cli.command(require('./commands/regression'));
+cli.command(require('./commands/track'));
+cli.command(require('./commands/bug'));
 
 cli.start();

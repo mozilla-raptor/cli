@@ -1,35 +1,22 @@
 var R = require('ramda');
 var regression = require('raptor-regression');
-
-/**
- * Stream stdin for the process and parse as JSON
- * @returns {Promise}
- */
-var readStdin = () => {
-  return new Promise((resolve, reject) => {
-    var chunks = [];
-    var done = R.pipe(R.join(''), JSON.parse, resolve);
-
-    process.openStdin();
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', chunk => chunks.push(chunk));
-    process.stdin.on('end', () => done(chunks));
-    process.stdin.on('error', reject);
-  });
-};
+var H = require('../lib/helpers');
 
 /**
  * Generate regression candidate points by creating a new object with columns as
- * keys, values as the object values, and merge with a base object containing tags
+ * keys, values as the object values, and merge with a base object containing
+ * tags and measurement name
  * @param {Function} merger function which generates new object with base object of tags
+ * @param {String} name measurement name
  * @param {Array} columns collection of object keys
  * @param {Array} values collection of object values
  * @returns {Array}
  */
-var mergeColumnsWithValues = (merger, columns, values) => {
+var mergeColumnsWithValues = (merger, name, columns, values) => {
   return R.map(R.pipe(
     R.zipObj(columns),
-    merger
+    merger,
+    R.merge(R.objOf('name', name))
   ), values);
 };
 
@@ -43,6 +30,7 @@ var transform = R.pipe(
   R.flatten, // Squish all the series together
   R.map(R.converge(mergeColumnsWithValues, [ // Generate all the points per series by merging together:
     R.pipe(R.prop('tags'), R.merge), // The tags for the series as the base of the new point,
+    R.prop('name'), // Set the name as the measurement name,
     R.prop('columns'), // Use the columns as new keys in the object
     R.prop('values') // And the values as the key-values to the columns
   ])),
@@ -59,11 +47,11 @@ var transform = R.pipe(
  */
 var callback = () => {
   Promise.resolve()
-    .then(readStdin)
+    .then(H.readStdin)
     .then(transform)
     .then(regression)
-    .then(R.pipe(JSON.stringify, console.log))
-    .catch(err => console.error(err.stack || err));
+    .then(H.JSON)
+    .catch(H.exits);
 };
 
 module.exports = {
