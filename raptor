@@ -1,11 +1,25 @@
 #! /usr/bin/env node
 
-var cli = require('./lib')('raptor');
+'use strict';
 
-cli.global('version', require('./lib/version'));
-cli.command(require('./commands/query'));
-cli.command(require('./commands/regression'));
-cli.command(require('./commands/track'));
-cli.command(require('./commands/bug'));
+let pkg = require('./package.json');
+let R = require('ramda');
+let Vorpal = require('vorpal');
 
-cli.start();
+let cli = new Vorpal();
+
+let plugin = (name) => require(name)(cli);
+
+let extend = R.pipe(
+  R.map(plugin),
+  R.bind(Promise.all, Promise)
+);
+
+let parse = () => cli.parse(process.argv);
+
+process.on('SIGINT', () => process.exit(2));
+
+plugin('./lib/extensions/rc')
+  .then(() => extend(pkg.config.cli.plugins))
+  .then(parse)
+  .catch(err => console.error(err.stack));

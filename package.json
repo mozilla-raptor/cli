@@ -1,6 +1,6 @@
 {
   "name": "@mozilla/raptor",
-  "version": "4.0.0-next",
+  "version": "5.0.0",
   "private": true,
   "preferGlobal": true,
   "description": "CLI tool for Firefox OS Gaia performance tests",
@@ -22,16 +22,43 @@
   },
   "bugs": {
     "url": "https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox%20OS&component=Gaia%3A%3APerformanceTest",
-    "email": "eli@mozilla.com"
+    "email": "eperelman@mozilla.com"
+  },
+  "config": {
+    "cli": {
+      "plugins": [
+        "./lib/extensions/db",
+        "./lib/extensions/exits",
+        "./lib/extensions/errors",
+        "./lib/extensions/json",
+        "./lib/extensions/meta",
+        "./lib/extensions/stdin",
+        "./lib/commands/version",
+        "raptor-test",
+        "raptor-query",
+        "raptor-regression",
+        "raptor-submit",
+        "raptor-track",
+        "raptor-bug"
+      ]
+    },
+    "cosmic": {
+      "packageProp": false,
+      "js": false,
+      "argv": false
+    }
   },
   "devDependencies": {},
   "dependencies": {
-    "debug": "2.2.0",
-    "nomnom": "mozilla-b2g/nomnom",
+    "cosmiconfig": "1.0.1",
     "ramda": "0.18.0",
-    "raptor-query": "3.0.0",
-    "raptor-regression": "1.0.2",
-    "validator": "4.1.0"
+    "raptor-bug": "2.0.0",
+    "raptor-query": "4.0.0",
+    "raptor-regression": "2.0.0",
+    "raptor-submit": "1.0.0",
+    "raptor-test": "1.0.0",
+    "raptor-track": "2.0.0",
+    "vorpal": "1.4.0"
   },
   "directories": {},
   "homepage": "https://developer.mozilla.org/en-US/Firefox_OS/Automated_testing/Raptor",
