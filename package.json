@@ -32,6 +32,7 @@
         "./lib/extensions/errors",
         "./lib/extensions/json",
         "./lib/extensions/meta",
+        "./lib/extensions/options",
         "./lib/extensions/stdin",
         "./lib/commands/version",
         "raptor-test",
@@ -74,5 +75,7 @@
     }
   ],
   "repository": "mozilla-raptor/cli",
-  "scripts": {}
+  "scripts": {
+    "init": "npm unlink && rm -rf node_modules && npm link raptor-test raptor-query raptor-regression raptor-submit raptor-track raptor-bug && npm install && npm link"
+  }
 }
