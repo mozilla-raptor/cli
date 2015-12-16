@@ -2,24 +2,37 @@
 
 'use strict';
 
+let config = require('./package.json').config.cosmic;
+let cosmic = require('cosmiconfig');
 let pkg = require('./package.json');
 let R = require('ramda');
 let Vorpal = require('vorpal');
 
+const MODULE = 'raptor';
+
 let cli = new Vorpal();
+let extend = (plugins, config) => {
+  return Promise.all(R.map(plugin => {
+    return Promise
+      .resolve(require(plugin)(cli))
+      .then(command => {
+        if (!command) {
+          return;
+        }
 
-let plugin = (name) => require(name)(cli);
+        let pairs = R.toPairs(config[command._name]);
 
-let extend = R.pipe(
-  R.map(plugin),
-  R.bind(Promise.all, Promise)
-);
+        R.map(R.apply((key, value) => command[key] = value), pairs);
+      });
+  }, plugins));
+};
 
 let parse = () => cli.parse(process.argv);
 
 process.on('SIGINT', () => process.exit(2));
 
-plugin('./lib/extensions/rc')
-  .then(() => extend(pkg.config.cli.plugins))
+cosmic(MODULE, config)
+  .then(base => base ? base.config : {})
+  .then(config => extend(pkg.config.cli.plugins, config))
   .then(parse)
   .catch(err => console.error(err.stack));
