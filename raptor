@@ -2,8 +2,8 @@
 
 'use strict';
 
-let config = require('./package.json').config.cosmic;
 let cosmic = require('cosmiconfig');
+let debug = require('debug')('raptor:cli');
 let pkg = require('./package.json');
 let R = require('ramda');
 let Vorpal = require('vorpal');
@@ -20,9 +20,11 @@ let extend = (plugins, config) => {
           return;
         }
 
-        let pairs = R.toPairs(config[command._name]);
-
-        R.map(R.apply((key, value) => command[key] = value), pairs);
+        try {
+          debug(`Loading plugin ${plugin}@${require(`${plugin}/package.json`).version}`);
+        } finally {
+          R.map(R.apply((key, value) => command[key] = value), R.toPairs(config[command._name]));
+        }
       });
   }, plugins));
 };
@@ -31,7 +33,9 @@ let parse = () => cli.parse(process.argv);
 
 process.on('SIGINT', () => process.exit(2));
 
-cosmic(MODULE, config)
+debug(`Using @mozilla/raptor@${pkg.version}`);
+
+cosmic(MODULE, pkg.config.cosmic)
   .then(base => base ? base.config : {})
   .then(config => extend(pkg.config.cli.plugins, config))
   .then(parse)

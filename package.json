@@ -52,6 +52,7 @@
   "devDependencies": {},
   "dependencies": {
     "cosmiconfig": "1.0.1",
+    "debug": "2.2.0",
     "ramda": "0.18.0",
     "raptor-bug": "2.0.0",
     "raptor-query": "4.0.0",
