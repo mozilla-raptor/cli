@@ -60,7 +60,7 @@
     "raptor-submit": "1.0.0",
     "raptor-test": "1.0.0",
     "raptor-track": "2.0.0",
-    "vorpal": "1.4.0"
+    "vorpal": "1.4.1"
   },
   "directories": {},
   "homepage": "https://developer.mozilla.org/en-US/Firefox_OS/Automated_testing/Raptor",
